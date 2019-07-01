@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+  <article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="#">Gourav</a>
+        <small class="text-muted">June 3, 2019</small>
+      </div>
+      <h2><a class="article-title" href="#">About Face Recognition</a></h2>
+      <p class="article-content">This is the Face Recognition Web Service. In this you can register a person and then test the face recognition system. You can make the system recognize your image from the link in the title bar.</p>
+      <p class="article-content">Following are some of the things that should be kept in mind before using Face Recognition : </p>
+      <ol class="article-content">
+        <li class="article-content">The image which you upload should only contain 1 face otherwise the server will not recognize your face</li>
+        <li class="article-content">Your uploaded photo will be stored by the server</li>
+        <li class="article-content">Your face will be recognized using HOG technique</li>
+      </ol>
+    </div>
+  </article>
+{% endblock content %}

@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block content %}
+<p> Now we will record your video</p>
+<video id="video" width="640" height="480" autoplay></video>
+<button id="snap">Snap Photo</button>
+<canvas id="canvas" width="640" height="480"></canvas>
+
+<script>
+var video = document.getElementById('video');
+
+if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+        video.srcObject = stream;
+        video.play();
+    });
+}
+
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+var video = document.getElementById('video');
+
+
+document.getElementById("snap").addEventListener("click", detect);
+
+function detect() {
+  $('#resultimg').css('visibility', 'visible');
+  context.drawImage(video, 0, 0, 640, 480);
+  var encodedImg = canvas.toDataURL();
+  $.post('recognize', {encodedImg: encodedImg}, function(result) {
+    console.log(result);
+    $("#resultimg").attr("src", result);
+    <!-- $('#result').html(result); -->
+  });
+}
+
+$(document).keypress(
+  function(event){
+    event.preventDefault();
+    detect();
+})
+<!-- setInterval(detect, 500); -->
+
+$(document).ready(function() {
+        <!-- $("#resultimg").show(); -->
+        namespace = '/public';
+        var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+        socket.on('server_response', function(res) {
+          console.log(res.data);
+        });
+        socket.on('server_got_card', function(res) {
+          console.log(res.data);
+          $('#card_id').val(res.data);
+          detect();
+        });
+});
+</script>
+
+{% endblock content %}
