@@ -42,7 +42,7 @@ class FaceRecognition (object) :
             known_encodings.append (known_encoding[0])
 
         recognized_id = []
-        path_to_save_images = "Dataset/Recognizing/ImageType"
+        path_to_save_images = "Dataset/ImageType"
         image_type = "Image"
 
         test_face_encodings = face_recognition.face_encodings (self.image)
